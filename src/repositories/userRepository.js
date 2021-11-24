@@ -11,7 +11,7 @@ async function createUser({name, email, password}) {
 
 async function consultUser({email}) {
     const existingUserWithGivenEmail = await connection.query(
-        `SELECT * FROM "users" WHERE "email"=$1`,
+        `SELECT * FROM "users" WHERE "email"=$1;`,
         [email]
     );
     return existingUserWithGivenEmail.rows[0];
