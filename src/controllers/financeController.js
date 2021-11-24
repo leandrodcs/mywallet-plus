@@ -1,4 +1,5 @@
 import connection from "../database.js";
+import jwt from "jsonwebtoken";
 import * as financeService from "../services/financeService.js"
 
 async function postFinances(req, res) {
@@ -26,6 +27,26 @@ async function postFinances(req, res) {
     }
 }
 
+async function getFinances(req, res) {
+    const authorization = req.headers.authorization || "";
+    const token = authorization.split('Bearer ')[1];
+
+    try {
+        if (!token) {
+          return res.sendStatus(401);
+        }
+
+        const events = await financeService.checkFinances({token})
+        if (events === '401') return res.sendStatus(401);
+    
+        res.send(events);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+}
+
 export {
     postFinances,
+    getFinances,
 }

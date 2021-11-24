@@ -15,6 +15,19 @@ async function createFinance({value, type, token}) {
     return financeRepository.createFinance({user, value, type})
 }
 
+async function checkFinances({token}) {
+    let user;
+    
+    try {
+      user = jwt.verify(token, process.env.JWT_SECRET);
+    } catch {
+      return '401';
+    }
+
+    return financeRepository.getFinances({user})
+}
+
 export {
     createFinance,
+    checkFinances,
 }
