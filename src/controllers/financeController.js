@@ -46,7 +46,26 @@ async function getFinances(req, res) {
     }
 }
 
+async function sumFinances(req, res) {
+    const authorization = req.headers.authorization || "";
+    const token = authorization.split('Bearer ')[1];
+
+    try {
+        if (!token) {
+          return res.sendStatus(401);
+        }
+        const sum = await financeService.sumFinances({token})
+        if (sum === '401') return res.sendStatus(401);
+    
+        res.send({ sum });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500)
+    }
+}
+
 export {
     postFinances,
     getFinances,
+    sumFinances,
 }

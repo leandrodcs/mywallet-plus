@@ -7,7 +7,8 @@
   "scripts": {
     "test": "NODE_ENV=test npx jest -i",
     "watch": "NODE_ENV=test npx jest --watch -i",
-    "dev": "npx nodemon src/server.js"
+    "dev": "npx nodemon src/server.js",
+    "test-server": "NODE_ENV=test npx nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
